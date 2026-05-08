@@ -1,0 +1,15 @@
+---
+- name: error handling 
+  hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - name: installing packages
+      apt:
+        name:
+          - wget
+          - nano
+          - htop
+        state: present
+        ignore.error: yes

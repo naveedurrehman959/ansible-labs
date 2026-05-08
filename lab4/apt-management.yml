@@ -1,0 +1,33 @@
+---
+- name: package management in apt module
+  hosts: debian
+  become: yes
+  tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: insatll git 
+      apt:
+        name: git
+        state: present
+    - name: install multiple packages
+      apt:
+        name:
+          - wget
+          - nano
+          - vim
+          - htop
+        state: present
+    - name: update all package
+      apt:
+        upgrade: dist
+        update_cache: yes
+    - name: remove unnecessary package
+      apt:
+        autoremove: yes
+    - name: specific package remove
+      apt:
+        name: nano
+        state: absent
+        purge: yes

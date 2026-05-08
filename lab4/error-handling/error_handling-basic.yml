@@ -1,0 +1,16 @@
+---
+- name: ignore error lab
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: install wrong package
+      package:
+        name: fake-package
+        state: present
+      register: result_output
+      failed_when: "'ERROR' in result.stdout"
+    - name: this task still runs
+      debug:
+        msg: "playbook continued successfully"

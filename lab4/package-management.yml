@@ -1,0 +1,26 @@
+---
+- name: package management wth yum module
+  hosts: red-hat
+  become: true
+  tasks:
+    - name: install git package
+      yum:
+        name: git
+        state: present
+    - name: install multiple packages
+      yum:
+        name:
+          - wget
+          - curl
+          - vim
+        state: present
+    - name: update all packages
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+    - name: remove specific package
+      yum:
+        name: telnet
+        state: absent
+

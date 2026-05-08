@@ -1,0 +1,22 @@
+---
+- name: service management with service module
+  hosts: all
+  become: yes
+  tasks:
+    - name: installing httpd/apache2 based on os family
+      package:
+        name: "{{ 'httpd' if ansible_os_family == 'RedHat' else 'apache2' }}"
+        state: present
+    - name: start and enable services
+      service:
+        name: "{{ 'httpd' if ansible_os_family == 'RedHat' else 'apache2' }}"
+        state: started
+        enabled: yes
+    - name: check if service is running or not
+      service:
+        name: "{{ 'httpd' if ansible_os_family == 'RedHat' else 'apache2' }}"
+        state: started
+      register: service_status
+    - name: display service status
+      debug:
+        msg: "web service is {{ 'running' if service_status.state == 'started' else 'not running' }}" 

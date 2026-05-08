@@ -1,0 +1,32 @@
+---
+- name: universal package management
+  hosts: all
+  become: yes
+  tasks:
+    - name: install git on red hat
+      yum:
+        name: git
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: install git on debian family
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+    - name: installing development tool on red hat
+      yum:
+        name:
+          - gcc
+          - make
+          - kernel-devel
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: installing development tools on debian
+      apt:
+        name:
+          - build-essential
+          - linux-headers-generic
+        state: present
+      when: ansible_os_family == "Debian"
