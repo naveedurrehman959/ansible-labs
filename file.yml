@@ -1,0 +1,9 @@
+---
+- name: create a file using envirenment path
+  hosts: local
+  tasks:
+    - name: create ansible_file.txt
+      file: 
+        path: "{{ ansible_env.HOME}}/ansible_file.txt"
+        state: touch
+        mode: '0644'

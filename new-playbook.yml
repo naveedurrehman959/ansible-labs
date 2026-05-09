@@ -1,0 +1,11 @@
+---
+- name: Creating EC2 Instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - secrets.yml
+  vars:
+    ansible_python_interpreter: /home/kali/ansible/aws-env/bin/python
+  roles:
+    - ec2

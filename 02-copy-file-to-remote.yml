@@ -1,0 +1,11 @@
+---
+- name: copy files to remote
+  hosts: all
+  become: true
+   
+  tasks:
+  - name: copy file
+    copy:
+      src: /home/kali/ansible/file.yml
+      dest: /tmp/
+      owner: jone

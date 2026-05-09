@@ -1,0 +1,31 @@
+---
+- name: Creating EC2 Instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - secrets.yml
+  vars:
+    ansible_python_interpreter: /home/kali/ansible/aws-env/bin/python
+
+  tasks:
+    - name: start an instance with a public IP address
+      amazon.aws.ec2_instance:
+        name: "{{ item.name }}"
+        key_name: "europ-lab-env"
+        instance_type: t3.micro
+        region: eu-north-1
+        vpc_subnet_id: subnet-0986c499cc304c0d4
+        security_groups:
+          - sg-073ade2b088a61ec1
+        #aws_access_key: "{{ aws_access_key }}"
+        #aws_secret_key: "{{ aws_secret_key }}"
+        network:
+          assign_public_ip: true
+        image_id: "{{ item.image }}"
+        tags:
+          Environment: "{{ item.name }}"
+      loop:
+        - { image: "ami-059f32cf6eecf0ef9", name: "node1" }
+        - { image: "ami-059f32cf6eecf0ef9", name: "node2" }
+        - { image: "ami-05d62b9bc5a6ca605", name: "node3" }
